@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class LoginTests extends BaseTest {
-    
+
     @Test
     public void loginInvalidEmailValidPasswordTest(){
         // Pre-condition
@@ -43,7 +43,6 @@ public class LoginTests extends BaseTest {
         // Post-condition
         driver.quit();
     }
-
     @Test
     public void loginValidEmailPasswordTest(){
         //      Added ChromeOptions argument below to fix websocket error
