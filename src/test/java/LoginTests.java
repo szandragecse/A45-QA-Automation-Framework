@@ -43,6 +43,8 @@ public class LoginTests extends BaseTest {
         // Post-condition
         driver.quit();
     }
+
+    
     @Test
     public void loginValidEmailPasswordTest(){
         //      Added ChromeOptions argument below to fix websocket error
