@@ -16,26 +16,27 @@ public class LoginTests extends BaseTest {
     @Test
     public void loginInvalidEmailValidPasswordTest(){
 
-        // Steps
+        navigateToPage();
         provideEmail("invalid@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
-        // Expected Result
+
         Assert.assertEquals(driver.getCurrentUrl(), url); //https://bbb.testpro.io/
 
     }
     @Test
     public void loginValidEmailPasswordTest(){
-        provideEmail("invalid@class.com");
+        navigateToPage();
+        provideEmail("demo@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
         isAvatarDisplayed();
     }
     @Test
     public static void loginValidEmailEmptyPasswordTest() {
-
-        provideEmail("invalid@class.com");
-        providePassword("te$t$tudent");
+        navigateToPage();
+        provideEmail("demo@class.com");
+        providePassword("");
         clickSubmit();
 
         Assert.assertEquals(driver.getCurrentUrl(), url); //https://bbb.testpro.io/

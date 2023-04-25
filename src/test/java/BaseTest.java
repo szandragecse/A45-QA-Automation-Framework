@@ -14,27 +14,28 @@ public class BaseTest {
 
     public static WebDriver driver = null;
     public static String url = "https://bbb.testpro.io/";
+    @BeforeSuite
+    static void setupClass() {
+        WebDriverManager.chromedriver().setup();
+    }
     @BeforeMethod
     public void launchBrowser() {
-        // Pre-condition
         //      Added ChromeOptions argument below to fix websocket error
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
 
-        WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(url);
     }
     @AfterMethod
     public void closeBrowser() {
         driver.quit();
     }
 
-    @BeforeSuite
-    static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
 
+    public static void navigateToPage() {
+        driver.get(url);
+    }
     public static void provideEmail(String email) {
         WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
         emailField.click();//not needed
