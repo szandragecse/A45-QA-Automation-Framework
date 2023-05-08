@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,8 +15,8 @@ import org.testng.annotations.Parameters;
 import java.time.Duration;
 
 public class BaseTest {
-
-    public static WebDriver driver = null;
+public static WebDriver driver = null;
+public static WebDriverWait wait;
     public static String url = "";
     @BeforeSuite
     static void setupClass() {
@@ -22,17 +24,17 @@ public class BaseTest {
     }
 
     public static void chooseDesiredPlaylist() {
-        WebElement choosePlaylist = driver.findElement(By.cssSelector(".playlist:nth-child(3)"));
+        WebElement choosePlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".playlist:nth-child(3)")));
         choosePlaylist.click();
     }
 
     public static void deletePlaylistButton(){
-        WebElement delPlaylistButton = driver.findElement(By.xpath("//button[@class='del btn-delete-playlist']"));
+        WebElement delPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='del btn-delete-playlist']")));
         delPlaylistButton.click();
     }
 
     public static void deletePlaylistOk() {
-        WebElement deletePlaylist = driver.findElement(By.xpath("//button[@class='ok']"));
+        WebElement deletePlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='ok']")));
         deletePlaylist.click();
 
 //public static void notificationValidation() {
@@ -51,6 +53,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         url=BaseUrl;
         navigateToPage();
+      wait= new WebDriverWait(driver, Duration.ofSeconds(5));
     }
     @AfterMethod
     public void closeBrowser() {
@@ -74,8 +77,9 @@ public class BaseTest {
         passwordField.clear();
         passwordField.sendKeys(password);
     }
-    public static void clickSubmit() {
-        WebElement submit = driver.findElement(By.cssSelector("button[type='submit']"));
+    public static void clickSubmit(){
+
+        WebElement submit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[type='submit']")));
         submit.click();
     }
 }
