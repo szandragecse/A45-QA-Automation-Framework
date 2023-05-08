@@ -4,28 +4,53 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import java.time.Duration;
 
 public class BaseTest {
 
     public static WebDriver driver = null;
-    public static String url = "https://bbb.testpro.io/";
+    public static String url = "";
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
+
+    public static void chooseDesiredPlaylist() {
+        WebElement choosePlaylist = driver.findElement(By.cssSelector(".playlist:nth-child(3)"));
+        choosePlaylist.click();
+    }
+
+    public static void deletePlaylistButton(){
+        WebElement delPlaylistButton = driver.findElement(By.xpath("//button[@class='del btn-delete-playlist']"));
+        delPlaylistButton.click();
+    }
+
+    public static void deletePlaylistOk() {
+        WebElement deletePlaylist = driver.findElement(By.xpath("//button[@class='ok']"));
+        deletePlaylist.click();
+
+//public static void notificationValidation() {
+//    WebElement notification = driver.findElement(By.cssSelector("div[@class=success.show]"));
+//            Assert.assertTrue(notification.isDisplayed());
+//        }
+    }
+
     @BeforeMethod
-    public void launchBrowser() {
+    @Parameters ({"BaseUrl"})
+    public void launchBrowser(String BaseUrl) {
         //      Added ChromeOptions argument below to fix websocket error
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        url=BaseUrl;
+        navigateToPage();
     }
     @AfterMethod
     public void closeBrowser() {
